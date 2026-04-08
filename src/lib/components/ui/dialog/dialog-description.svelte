@@ -1,13 +1,17 @@
 <script lang="ts">
-  import { cn } from "$lib/utils";
-  import * as Dialog from "bits-ui";
+  import { Dialog as DialogPrimitive } from 'bits-ui';
+  import { cn } from '../../utils';
 
-  type $$Props = Dialog.DialogDescriptionProps;
+  interface $$Props extends DialogPrimitive.DescriptionProps {
+    class?: string;
+  }
 
-  let className: $$Props["class"] = undefined;
+  let className = '';
   export { className as class };
+
+  const finalClass = cn('text-sm text-gray-500', className);
 </script>
 
-<Dialog.Description class={cn("text-sm text-muted-foreground", className)}>
+<p class={finalClass} {...$$restProps}>
   <slot />
-</Dialog.Description>
+</p>

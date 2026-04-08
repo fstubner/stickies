@@ -1,20 +1,20 @@
-import type { GoogleCalendarEvent } from '../types/Note';
+export interface CalendarEvent {
+  id: string;
+  title: string;
+  start: Date;
+  end: Date;
+  description?: string;
+}
 
 class CalendarService {
-  private events: GoogleCalendarEvent[] = [];
-
-  async getUpcomingEvents(daysAhead: number = 7): Promise<GoogleCalendarEvent[]> {
-    // TODO: Integrate with Google Calendar API
-    return this.events;
+  async getUpcomingEvents(): Promise<CalendarEvent[]> {
+    // Implementation would go here
+    return [];
   }
 
-  async createEvent(title: string, date: Date, description?: string): Promise<GoogleCalendarEvent | null> {
-    // TODO: Implement event creation
-    return null;
-  }
-
-  async syncEvents(): Promise<void> {
-    // TODO: Implement event sync
+  async createEvent(event: Omit<CalendarEvent, 'id'>): Promise<CalendarEvent> {
+    // Implementation would go here
+    return { ...event, id: 'new-id' };
   }
 }
 
