@@ -1,23 +1,23 @@
 import { writable } from 'svelte/store';
 
-export interface Activity {
+export interface ActivityItem {
   id: string;
-  type: 'create' | 'update' | 'delete' | 'view';
+  type: 'create' | 'update' | 'delete';
+  timestamp: Date;
   noteId: string;
-  timestamp: number;
   description: string;
 }
 
 function createActivityStore() {
-  const { subscribe, set, update } = writable<Activity[]>([]);
+  const { subscribe, set, update } = writable<ActivityItem[]>([]);
 
   return {
     subscribe,
-    log: (activity: Activity) => {
-      update(activities => [activity, ...activities].slice(0, 100));
+    addActivity: (item: Omit<ActivityItem, 'id'>) => {
+      update(items => [{ ...item, id: Math.random().toString() }, ...items]);
     },
     clear: () => set([])
   };
 }
 
-export const activity = createActivityStore();
+export const activityStore = createActivityStore();

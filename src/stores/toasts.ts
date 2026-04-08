@@ -3,32 +3,26 @@ import { writable } from 'svelte/store';
 export interface Toast {
   id: string;
   message: string;
-  type: 'success' | 'error' | 'info' | 'warning';
+  type: 'info' | 'success' | 'error' | 'warning';
   duration?: number;
 }
 
-function createToastStore() {
-  const { subscribe, set, update } = writable<Toast[]>([]);
+function createToastsStore() {
+  const { subscribe, update } = writable<Toast[]>([]);
 
   return {
     subscribe,
-    show: (toast: Omit<Toast, 'id'>) => {
-      const id = Math.random().toString(36).substr(2, 9);
-      const newToast: Toast = { ...toast, id };
-
-      update(toasts => [...toasts, newToast]);
-
-      if (toast.duration ?? 3000) {
+    add: (toast: Omit<Toast, 'id'>) => {
+      const id = Math.random().toString();
+      update(toasts => [...toasts, { ...toast, id }]);
+      if (toast.duration) {
         setTimeout(() => {
           update(toasts => toasts.filter(t => t.id !== id));
-        }, toast.duration ?? 3000);
+        }, toast.duration);
       }
     },
-    dismiss: (id: string) => {
-      update(toasts => toasts.filter(t => t.id !== id));
-    },
-    clear: () => set([])
+    remove: (id: string) => update(toasts => toasts.filter(t => t.id !== id))
   };
 }
 
-export const toasts = createToastStore();
+export const toastsStore = createToastsStore();

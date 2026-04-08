@@ -1,32 +1,24 @@
 import { writable } from 'svelte/store';
 
-export interface Command {
+export interface CommandDef {
   id: string;
-  name: string;
-  description: string;
+  label: string;
+  description?: string;
   keybinding?: string;
-  handler: () => void | Promise<void>;
 }
 
-function createCommandStore() {
-  const { subscribe, set, update } = writable<Command[]>([]);
+function createCommandsStore() {
+  const { subscribe, set } = writable<CommandDef[]>([]);
 
   return {
     subscribe,
-    register: (command: Command) => {
-      update(commands => [...commands, command]);
+    register: (cmd: CommandDef) => {
+      // Implementation would go here
     },
-    unregister: (id: string) => {
-      update(commands => commands.filter(c => c.id !== id));
-    },
-    execute: async (id: string) => {
-      const command = ([] as Command[]).find(c => c.id === id);
-      if (command) {
-        await command.handler();
-      }
-    },
-    clear: () => set([])
+    getAll: () => {
+      // Implementation would go here
+    }
   };
 }
 
-export const commands = createCommandStore();
+export const commandsStore = createCommandsStore();

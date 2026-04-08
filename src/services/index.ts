@@ -1,9 +1,9 @@
-export { noteService } from './noteService';
-export { calendarService } from './calendarService';
-export { aiService } from './aiService';
-export { storageService } from './storageService';
-export { notificationService } from './notificationService';
-export { captureService } from './captureService';
-export { searchService } from './searchService';
-export { commandRegistry } from './commandRegistry';
-export { electronService } from './electronService';
+export * from './aiService';
+export * from './calendarService';
+export * from './captureService';
+export * from './commandRegistry';
+export * from './electronService';
+export * from './noteService';
+export * from './notificationService';
+export * from './searchService';
+export * from './storageService';

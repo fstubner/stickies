@@ -1,11 +1,9 @@
-import { writable, derived } from 'svelte/store';
+import { writable } from 'svelte/store';
 
 export interface Workspace {
   id: string;
   name: string;
   color?: string;
-  createdAt: number;
-  notes: string[];
 }
 
 function createWorkspacesStore() {
@@ -13,19 +11,12 @@ function createWorkspacesStore() {
 
   return {
     subscribe,
-    add: (workspace: Workspace) => {
-      update(workspaces => [...workspaces, workspace]);
+    add: (workspace: Workspace) => update(ws => [...ws, workspace]),
+    update: (id: string, changes: Partial<Workspace>) => {
+      update(ws => ws.map(w => w.id === id ? { ...w, ...changes } : w));
     },
-    remove: (id: string) => {
-      update(workspaces => workspaces.filter(w => w.id !== id));
-    },
-    update: (id: string, workspace: Partial<Workspace>) => {
-      update(workspaces =>
-        workspaces.map(w => (w.id === id ? { ...w, ...workspace } : w))
-      );
-    },
-    clear: () => set([])
+    remove: (id: string) => update(ws => ws.filter(w => w.id !== id))
   };
 }
 
-export const workspaces = createWorkspacesStore();
+export const workspacesStore = createWorkspacesStore();

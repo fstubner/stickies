@@ -1,35 +1,18 @@
-import { writable, derived } from 'svelte/store';
-
-export interface Tag {
-  id: string;
-  name: string;
-  color?: string;
-  count: number;
-}
+import { writable } from 'svelte/store';
 
 function createTagsStore() {
-  const { subscribe, set, update } = writable<Tag[]>([]);
+  const { subscribe, set, update } = writable<string[]>([]);
 
   return {
     subscribe,
-    add: (tag: Tag) => {
-      update(tags => [...tags, tag]);
-    },
-    remove: (id: string) => {
-      update(tags => tags.filter(t => t.id !== id));
-    },
-    increment: (id: string) => {
-      update(tags =>
-        tags.map(t => (t.id === id ? { ...t, count: t.count + 1 } : t))
-      );
-    },
-    decrement: (id: string) => {
-      update(tags =>
-        tags.map(t => (t.id === id ? { ...t, count: Math.max(0, t.count - 1) } : t))
-      );
-    },
-    clear: () => set([])
+    add: (tag: string) => update(tags => [...new Set([...tags, tag])]),
+    remove: (tag: string) => update(tags => tags.filter(t => t !== tag)),
+    getAll: () => {
+      let tags: string[] = [];
+      subscribe(t => tags = t)();
+      return tags;
+    }
   };
 }
 
-export const tags = createTagsStore();
+export const tagsStore = createTagsStore();

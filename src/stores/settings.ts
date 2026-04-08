@@ -1,33 +1,42 @@
 import { writable } from 'svelte/store';
 
-export interface AppSettings {
+export interface Settings {
   theme: 'light' | 'dark' | 'system';
-  alwaysOnTop: boolean;
-  minimizeToTray: boolean;
-  defaultNoteColor: string;
   fontSize: number;
-  syncEnabled: boolean;
+  autoSave: boolean;
+  notifications: boolean;
 }
 
-const defaultSettings: AppSettings = {
+const defaultSettings: Settings = {
   theme: 'system',
-  alwaysOnTop: false,
-  minimizeToTray: true,
-  defaultNoteColor: 'yellow',
   fontSize: 14,
-  syncEnabled: false
+  autoSave: true,
+  notifications: true
 };
 
 function createSettingsStore() {
-  const { subscribe, set, update } = writable<AppSettings>(defaultSettings);
+  const { subscribe, set, update } = writable<Settings>(defaultSettings);
 
   return {
     subscribe,
-    updateSetting: (key: keyof AppSettings, value: any) => {
-      update(state => ({ ...state, [key]: value }));
-    },
-    reset: () => set(defaultSettings)
+    update: (changes: Partial<Settings>) => update(s => ({ ...s, ...changes }))
   };
 }
 
 export const settings = createSettingsStore();
+
+export async function loadSettings(): Promise<void> {
+  // Implementation would go here
+}
+
+export function applyTheme(theme: string): void {
+  document.documentElement.setAttribute('data-theme', theme);
+}
+
+export function needsOnboarding(): boolean {
+  return !localStorage.getItem('onboarding-complete');
+}
+
+export async function completeOnboarding(): Promise<void> {
+  localStorage.setItem('onboarding-complete', 'true');
+}

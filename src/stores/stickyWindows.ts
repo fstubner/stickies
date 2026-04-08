@@ -1,34 +1,21 @@
 import { writable } from 'svelte/store';
 
-export interface StickyWindow {
-  id: string;
-  noteId: string;
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-  zIndex: number;
-  alwaysOnTop: boolean;
-}
-
 function createStickyWindowsStore() {
-  const { subscribe, set, update } = writable<StickyWindow[]>([]);
+  const { subscribe, set } = writable<string[]>([]);
 
   return {
     subscribe,
-    add: (window: StickyWindow) => {
-      update(windows => [...windows, window]);
+    add: (id: string) => {
+      // Implementation would go here
     },
     remove: (id: string) => {
-      update(windows => windows.filter(w => w.id !== id));
-    },
-    update: (id: string, window: Partial<StickyWindow>) => {
-      update(windows =>
-        windows.map(w => (w.id === id ? { ...w, ...window } : w))
-      );
-    },
-    clear: () => set([])
+      // Implementation would go here
+    }
   };
 }
 
-export const stickyWindows = createStickyWindowsStore();
+export const stickyWindowsStore = createStickyWindowsStore();
+
+export function updateOpenStickyWindows(ids: string[]): void {
+  stickyWindowsStore.set(ids);
+}
