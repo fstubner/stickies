@@ -1,0 +1,48 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom colors and styles for stickies */
+
+:root {
+  --note-yellow: #fef3c7;
+  --note-pink: #fbcfe8;
+  --note-blue: #bfdbfe;
+  --note-green: #bbf7d0;
+  --note-purple: #e9d5ff;
+  --note-orange: #fed7aa;
+}
+
+/* Global styles */
+body {
+  @apply font-sans antialiased;
+}
+
+/* Note card styles */
+.note-card {
+  @apply rounded-lg shadow-md p-4 transition-transform hover:shadow-lg;
+}
+
+.note-yellow {
+  @apply bg-yellow-100 border-yellow-200;
+}
+
+.note-pink {
+  @apply bg-pink-100 border-pink-200;
+}
+
+.note-blue {
+  @apply bg-blue-100 border-blue-200;
+}
+
+.note-green {
+  @apply bg-green-100 border-green-200;
+}
+
+.note-purple {
+  @apply bg-purple-100 border-purple-200;
+}
+
+.note-orange {
+  @apply bg-orange-100 border-orange-200;
+}

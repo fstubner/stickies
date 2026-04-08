@@ -1,0 +1,16 @@
+{
+  "app": {
+    "theme": "system",
+    "alwaysOnTop": false,
+    "minimizeToTray": true
+  },
+  "canvas": {
+    "showGrid": true,
+    "snapToGrid": false,
+    "gridSize": 20
+  },
+  "ai": {
+    "enabled": true,
+    "similarityThreshold": 0.6
+  }
+}

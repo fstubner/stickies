@@ -1,0 +1,20 @@
+{
+  "app": {
+    "theme": "system",
+    "alwaysOnTop": false,
+    "minimizeToTray": false
+  },
+  "canvas": {
+    "showGrid": true,
+    "snapToGrid": true,
+    "gridSize": 20
+  },
+  "ai": {
+    "enabled": true,
+    "similarityThreshold": 0.5
+  },
+  "dev": {
+    "enableDevTools": true,
+    "logNetwork": true
+  }
+}
